@@ -7,13 +7,14 @@ def get_setting() -> Setting | None:
     settings = database.session.execute(select(Setting)).scalars().first()
     return settings if settings is not None else None
 
-def set_settings(*, invenio_address: str, invenio_token: str, cordra_address: str, cordra_token: str) -> Setting:
+def set_settings(*, invenio_address: str, invenio_token: str, cordra_address: str, cordra_username: str, cordra_password: str) -> Setting:
     current_setting = get_setting()
     new_setting = Setting(
         invenio_address=invenio_address,
         invenio_token=invenio_token,
         cordra_address=cordra_address,
-        cordra_token=cordra_token
+        _cordra_username=cordra_username,
+        _cordra_password=cordra_password
     )
 
     if current_setting is None:

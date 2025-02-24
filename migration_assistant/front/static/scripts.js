@@ -19,13 +19,15 @@ function checkInvenioConnectivity() {
     const invenioAddressValue = invenioAddress.value;
     const invenioTokenValue = invenioToken.value;
 
-    fetch(invenioAddressValue, {
+    fetch('/check-connection/invenio', {
+        method: 'POST',
         headers: {
-            'Authorization': `Bearer ${invenioTokenValue}`,
-            "Content-Type": "application/json"
+            'Content-Type': 'application/json'
         },
-        mode: 'cors',
-        credentials: 'include'
+        body: JSON.stringify({
+            'url': `${invenioAddressValue}`,
+            'token': `${invenioTokenValue}`
+        })
     }).then(
         r => {
             console.log(r)
@@ -44,21 +46,28 @@ function checkCordraConnectivity() {
     console.log('in checkCordraConnectivity');
 
     const cordraAddress = document.getElementById('settings-cordra-address');
-    const cordraToken = document.getElementById('settings-cordra-token');
+    const cordraUsername = document.getElementById('settings-cordra-username');
+    const cordraPassword = document.getElementById('settings-cordra-password');
     const cordraAddressValue = cordraAddress.value;
-    const cordraTokenValue = cordraToken.value;
+    const cordraUsernameValue = cordraUsername.value;
+    const cordraPasswordValue = cordraPassword.value;
 
-    fetch(`${cordraAddressValue}/auth/introspect`, {
+    fetch(`/check-connection/cordra`, {
+        method: 'POST',
         headers: {
-            'Authorization': `Bearer ${cordraTokenValue}`
+            'Content-Type': 'application/json'
         },
-        method: 'POST'
+        body: JSON.stringify({
+            'url': `${cordraAddressValue}`,
+            'username': `${cordraUsernameValue}`,
+            'password': `${cordraPasswordValue}`,
+        })
     }).then(
         r => {
             if (r.ok) {
                 showToast(toastSuccessClass, 'connection successful');
             } else {
-                showToast(toastFailureClass, 'connection failed: ${r.status}');
+                showToast(toastFailureClass, `connection failed: ${r.status}`);
             }
         }
     )
@@ -68,13 +77,15 @@ function saveSettings() {
     const invenioAddress = document.getElementById('settings-invenio-address');
     const invenioToken = document.getElementById('settings-invenio-token');
     const cordraAddress = document.getElementById('settings-cordra-address');
-    const cordraToken = document.getElementById('settings-cordra-token');
+    const cordraUsername = document.getElementById('settings-cordra-username');
+    const cordraPassword = document.getElementById('settings-cordra-password');
     let invenioAddressValue = invenioAddress.value;
     let invenioTokenValue = invenioToken.value;
-    let cordraAddressValue = cordraAddress.value;
-    let cordraTokenValue = cordraToken.value;
+    const cordraAddressValue = cordraAddress.value;
+    const cordraUsernameValue = cordraUsername.value;
+    const cordraPasswordValue = cordraPassword.value;
 
-    console.log(`in saveSettings, with values:\n - invenio: ${invenioAddressValue}/${invenioTokenValue}\n - cordra: ${cordraAddressValue}/${cordraTokenValue}`);
+    console.log(`in saveSettings, with values:\n - invenio: ${invenioAddressValue}/${invenioTokenValue}\n - cordra: ${cordraAddressValue}/${cordraUsernameValue}:${cordraPasswordValue}`);
     fetch(
         '/settings',
         {
@@ -83,7 +94,8 @@ function saveSettings() {
                 invenioAddress: invenioAddressValue,
                 invenioToken: invenioTokenValue,
                 cordraAddress: cordraAddressValue,
-                cordraToken: cordraTokenValue
+                cordraUsername: cordraUsernameValue,
+                cordraPassword: cordraPasswordValue
             }),
             headers: {
                 'Accept': 'application/json',
@@ -99,4 +111,33 @@ function saveSettings() {
             }
         }
     )
+}
+
+function runMigration() {
+    const migrationStatus = document.getElementById('migrationStatus')
+    const migrateButton = document.getElementById('migrateButton')
+    const migrationTextArea = document.getElementById('migrationTextArea')
+    migrationTextArea.value = ''
+
+    migrationStatus.innerHTML = "migration ongoing..."
+    migrateButton.disabled = true
+
+    const socket = new WebSocket("/ws");
+
+    // Listen for messages
+    socket.addEventListener("message", (event) => {
+      console.log("Message from server ", event.data);
+      if (migrationTextArea.value) {
+        migrationTextArea.value = `${migrationTextArea.value}\n${event.data}`
+      } else {
+        migrationTextArea.value = `${event.data}`
+      }
+
+      migrationTextArea.scrollTop = migrationTextArea.scrollHeight
+    });
+
+    socket.addEventListener('close', (event) => {
+        migrationStatus.innerHTML = "last successful migration: just now"
+        migrateButton.disabled = false
+    })
 }

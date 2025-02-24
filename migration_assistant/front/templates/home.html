@@ -38,8 +38,12 @@
                     <input type="text" class="form-control" id="settings-cordra-address" placeholder="enter the address of your Cordra instance" required value="{{props['settings'].cordra_address if props['settings'] else ''}}">
                   </div>
                   <div class="mb-3">
-                    <label for="settings-cordra-token" class="form-label">Cordra token</label>
-                    <input type="password" class="form-control" id="settings-cordra-token" placeholder="enter the admin access token to your Cordra instance" required value="{{props['settings'].cordra_token if props['settings'] else ''}}">
+                    <label for="settings-cordra-username" class="form-label">Cordra username</label>
+                    <input type="text" class="form-control" id="settings-cordra-username" placeholder="enter the username of your Cordra user" required value="{{props['settings'].cordra_username if props['settings'] else ''}}">
+                  </div>
+                  <div class="mb-3">
+                    <label for="settings-cordra-password" class="form-label">Cordra token</label>
+                    <input type="password" class="form-control" id="settings-cordra-password" placeholder="enter the password to your Cordra user" required value="{{props['settings'].cordra_password if props['settings'] else ''}}">
                   </div>
                   <div style="align-self: flex-end; display: flex; flex-direction: column; gap: 8px">
                     <button type="button" onclick=checkCordraConnectivity() class="btn btn-secondary">Check connection</button>
@@ -57,7 +61,12 @@
             </h2>
             <div id="collapseTwo" class="accordion-collapse collapse {{ props['migration_accordion']['div_class'] }}" data-bs-parent="#migrationAccordion">
               <div class="accordion-body">
-                <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                <div style="display: flex; justify-content: space-between; align-items: baseline">
+                  <p id="migrationStatus">last successful migration: {{ props['recent_log'] if props['recent_log'] else 'never'}} </p>
+                  <button class="btn btn-primary" onclick=runMigration() id="migrateButton">Migrate</button>
+                </div>
+                <label for="migrationTextArea">logs:</label>
+                <textarea class="form-control" id="migrationTextArea" readonly="readonly" rows="3" wrap="hard" style="width: 100%; max-width: 100%;">{{props['log_contents'] if props['log_contents'] else 'no logs available'}}</textarea>
               </div>
             </div>
           </div>

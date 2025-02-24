@@ -1,4 +1,6 @@
 import os
+from time import sleep
+
 from flask import Flask
 from sqlalchemy import Column, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
@@ -7,6 +9,8 @@ from flask_cors import CORS
 
 import migration_assistant.repository.init as repository_init
 from  migration_assistant.front.home import home
+
+from flask_sock import Sock
 
 configuration_variables = {
     'FLASK_LOG_LEVEL': 'WARNING',
@@ -34,6 +38,15 @@ def create_app():
     app.register_blueprint(home.bp)
 
     CORS(app)
+    sock = Sock(app)
+
+    @sock.route('/ws')
+    def migration(ws):
+        for i in range(5):
+            ws.send({'message': 'this is a test message'})
+            sleep(1)
+
+        ws.close()
 
     # TODO: delete
     # with app.app_context():
