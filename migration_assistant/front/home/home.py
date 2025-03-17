@@ -1,8 +1,12 @@
 import base64
+import json
 import os
 from http import HTTPStatus
 from flask import Blueprint, render_template, current_app, request
 import requests as rq
+
+from migration_assistant.migration.cordra import Cordra
+from migration_assistant.migration.invenio import Invenio
 from migration_assistant.utils import delete_trailing_slash
 from flask_cors import cross_origin
 from sqlalchemy import custom_op
@@ -135,6 +139,45 @@ def check_connection(service: str):
         return current_app.response_class(status=HTTPStatus.INTERNAL_SERVER_ERROR, mimetype='application/json', response={"message": "invalid service"})
 
 
-@bp.route('/metadata', methods=['GET'])
-def get_metadata():
-    return f'<script type="application/ld+json" src="http://127.0.0.1:9090/static/jsonLD.json"></script>'
+@bp.route('/metadata/<id>', methods=['GET'])
+def get_metadata(id: str):
+    cordra = Cordra(get_setting())
+    invenio = Invenio(get_setting())
+
+    fdo = cordra.object_present(id)
+    if fdo is None:
+        return current_app.response_class(status=HTTPStatus.NOT_FOUND, mimetype='application/json', response={'message': f'record: {id} has not been migrated'})
+    else:
+        fdo = fdo['attributes']['content']
+
+    if 'application/ld+json' in request.accept_mimetypes.values():
+        return fdo
+
+    if 'application/xml' in request.accept_mimetypes.values():
+        if len(fdo['hasPart']) > 0:
+            has_part = ""
+            for part in fdo['hasPart']:
+                if "@id" in part:
+                    has_part += f"<dcterms:hasPart>{part['@id']}</dcterms:hasPart>\n"
+            return current_app.response_class(status=HTTPStatus.OK, mimetype='application/xml', response=f"""
+            <?xml version='1.0' encoding='utf-8'?>
+            <oai_dc:dc xmlns:dcterms="http://purl.org/dc/terms/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+              {has_part}
+            </oai_dc:dc>
+            """)
+
+    return f"""
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>{id}</title>
+        </head>
+        <script type="application/ld+json">
+            {json.dumps(fdo)}
+        </script>
+        <body>
+            {json.dumps(fdo)}
+        </body>
+        </html>
+    """

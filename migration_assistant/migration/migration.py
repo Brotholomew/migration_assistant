@@ -1,5 +1,6 @@
 from sys import prefix
 from migration_assistant.migration.cordra import Cordra
+from migration_assistant.migration.invenio import Invenio
 from migration_assistant.migration.migration_logger import MigrationLogger
 from migration_assistant.repository.setting import *
 from simple_websocket import Server
@@ -19,6 +20,7 @@ def read_file(filename):
 
 def migrate(ws: Server):
     cordra = Cordra(get_setting())
+    invenio = Invenio(get_setting())
     logger = MigrationLogger(ws)
     base_fdos = parse_files(prefix='fdo')
     fdos = parse_files(exclude='fdo')
@@ -106,4 +108,22 @@ def migrate(ws: Server):
                 logger.end()
                 return
 
+    record_ids = []
+    try:
+        record_ids = invenio.get_all_record_ids()
+    except Exception as e:
+        logger.err(f'failed to get all record ids: {e}')
+
+    # migrate invenio records
+    for record_id in record_ids:
+        fdo = invenio.get_record_fdo(record_id)
+
+        try:
+            # create of update
+            cordra.update_object(record_id, json.dumps(fdo))
+            logger.log(f'created / updated the FDO for {record_id}')
+        except Exception as e:
+            logger.err(f'failed to update the {record_id}: {e}')
+
+    logger.log('migration complete')
     logger.end()

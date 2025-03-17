@@ -141,3 +141,29 @@ function runMigration() {
         migrateButton.disabled = false
     })
 }
+
+function metadataSearch() {
+    const metadataSearchField = document.getElementById('metadataSearchField')
+    const metadataTextArea = document.getElementById('metadataTextArea')
+
+    fetch(
+        `/metadata/${metadataSearchField.value}`,
+        {
+            method: "GET",
+            headers: {
+                "Accept": "application/ld+json"
+            }
+        }
+    ).then(
+        r => {
+            if (r.ok) {
+                r.json().then(data => metadataTextArea.value = JSON.stringify(data, null, 2))
+                //  = r.json()
+                metadataSearchField.value = ''
+            } else {
+                showToast(toastFailureClass, `failed to retrieve metadata for ${metadataSearchField.value}: ${r.status}`)
+                metadataTextArea.value = ''
+            }
+        }
+    )
+}
