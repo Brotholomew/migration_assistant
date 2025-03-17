@@ -1,0 +1,24 @@
+{
+  "id": "language-attribute-definition",
+  "fdoType": "CORDRA_PREFIX/FDO-attribute-definition-type",
+  "fdoProfile": "CORDRA_PREFIX/FDO-content-profile",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "alternateName": {
+        "type": "string"
+      },
+      "@type": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "name",
+      "@type"
+    ],
+    "additionalProperties": false
+  }
+}

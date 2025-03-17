@@ -6,11 +6,14 @@ from sqlalchemy import Column, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from simple_websocket import Server
 
 import migration_assistant.repository.init as repository_init
 from  migration_assistant.front.home import home
 
 from flask_sock import Sock
+
+from migration_assistant.migration.migration import migrate
 
 configuration_variables = {
     'FLASK_LOG_LEVEL': 'WARNING',
@@ -41,12 +44,14 @@ def create_app():
     sock = Sock(app)
 
     @sock.route('/ws')
-    def migration(ws):
-        for i in range(5):
-            ws.send({'message': 'this is a test message'})
-            sleep(1)
-
+    def migration(ws: Server):
+        migrate(ws)
         ws.close()
+        #for i in range(5):
+        #    ws.send({'message': 'this is a test message'})
+        #    sleep(1)
+
+        #ws.close()
 
     # TODO: delete
     # with app.app_context():

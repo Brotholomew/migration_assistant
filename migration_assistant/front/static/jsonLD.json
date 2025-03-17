@@ -1,0 +1,77 @@
+{
+  "@context": "http://schema.org",
+  "@type": "https://schema.org/CreativeWork",
+  "identifier": "https://127.0.0.1:5000/api/records/qan3j-kbd36",
+  "object_identifier": "https://doi.org/10.5281/zenodo.7825572",
+  "name": "Extending the InvenioRDM project with a novel FAIR Digital Objects framework",
+  "language": "english",
+  "creator": [
+    {
+      "name": "Blachut, Bartosz Wladyslaw",
+      "givenName": "Bartosz Wladyslaw",
+      "familyName": "Blachut",
+      "affiliation": [
+        {
+          "@type": "Organization",
+          "name": "TU Wien"
+        }
+      ],
+      "@type": "Person"
+    }
+  ],
+  "author": [
+    {
+      "name": "Blachut, Bartosz Wladyslaw",
+      "givenName": "Bartosz Wladyslaw",
+      "familyName": "Blachut",
+      "affiliation": [
+        {
+          "@type": "Organization",
+          "name": "TU Wien"
+        }
+      ],
+      "@type": "Person"
+    }
+  ],
+  "editor": [
+    {
+      "name": "Blachut, Bartosz",
+      "givenName": "Bartosz",
+      "familyName": "Blachut",
+      "affiliation": [
+        {
+          "@type": "Organization",
+          "name": "TU Wien"
+        }
+      ],
+      "@type": "Person"
+    }
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "invenio-instance"
+  },
+  "keywords": "Educational sciences",
+  "datePublished": "2025-02-24",
+  "dateModified": "2025-03-02T12:23:48.954347+00:00",
+  "temporal": [
+    "2024-11-30"
+  ],
+  "inLanguage": {
+    "alternateName": "eng",
+    "@type": "Language",
+    "name": "English"
+  },
+  "contentSize": "351.98 KB",
+  "size": "351.98 KB",
+  "version": "0.0.1",
+  "license": "https://creativecommons.org/licenses/by/4.0/legalcode",
+  "description": "<p>example description</p>",
+  "citation": [
+    {
+      "@type": "Dataset",
+      "@id": "https://doi.org/10.5281/zenodo.7825572"
+    }
+  ],
+  "url": "https://127.0.0.1:5000/records/qan3j-kbd36"
+}

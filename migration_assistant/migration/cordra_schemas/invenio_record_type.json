@@ -1,0 +1,6 @@
+{
+  "id": "invenio-record-type",
+  "fdoType": "CORDRA_PREFIX/invenio-record-type",
+  "fdoProfile": "CORDRA_PREFIX/FDO-type-profile",
+  "description": "This is a record imported from an invenioRDM instance"
+}

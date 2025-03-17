@@ -1,0 +1,8 @@
+{
+  "id": "FDO-schema-attribute-definition",
+  "fdoType": "CORDRA_PREFIX/FDO-attribute-definition-type",
+  "fdoProfile": "CORDRA_PREFIX/FDO-content-profile",
+  "schema": {
+    "type": "object"
+  }
+}

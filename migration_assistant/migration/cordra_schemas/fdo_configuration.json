@@ -1,0 +1,45 @@
+{
+  "type": "object",
+  "required": [
+    "fdoType",
+    "fdoProfile",
+    "id"
+  ],
+  "definitions": {
+    "attribute-metatype": {
+      "oneOf": [
+        {
+          "type": "object"
+        },
+        {
+          "type": "string",
+          "cordra": {
+            "type": {
+              "handleReference": {
+                "types": [
+                  "FDO-configuration"
+                ]
+              }
+            },
+            "preview": {
+              "showInPreview": true
+            }
+          }
+        }
+      ]
+    }
+  },
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "fdoType": {
+      "title": "FDO type",
+      "$ref": "#/definitions/attribute-metatype"
+    },
+    "fdoProfile": {
+      "title": "FDO Profile",
+      "$ref": "#/definitions/attribute-metatype"
+    }
+  }
+}

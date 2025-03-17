@@ -1,0 +1,92 @@
+{
+  "id": "contributors-attribute-definition",
+  "fdoType": "CORDRA_PREFIX/FDO-attribute-definition-type",
+  "fdoProfile": "CORDRA_PREFIX/FDO-content-profile",
+  "schema": {
+    "type": "array",
+    "items": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "affiliation": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "@type": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "@type",
+                  "name"
+                ],
+                "additionalParameters": false
+              }
+            },
+            "@id": {
+              "type": "string"
+            },
+            "@type": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "givenName": {
+              "type": "string"
+            },
+            "familyName": {
+              "type": "string"
+            },
+            "affiliation": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "@type": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "@type",
+                  "name"
+                ],
+                "additionalParameters": false
+              }
+            },
+            "@type": {
+              "type": "string"
+            },
+            "@id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "familyName"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  }
+}

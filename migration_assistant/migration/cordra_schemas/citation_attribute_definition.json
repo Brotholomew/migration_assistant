@@ -1,0 +1,24 @@
+{
+  "id": "citation-attribute-definition",
+  "fdoType": "CORDRA_PREFIX/FDO-attribute-definition-type",
+  "fdoProfile": "CORDRA_PREFIX/FDO-content-profile",
+  "schema": {
+    "type": "array",
+    "items": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        },
+        "@id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "@type",
+        "@id"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

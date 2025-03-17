@@ -1,0 +1,6 @@
+{
+  "id": "FDO-attribute-definition-type",
+  "fdoType": "CORDRA_PREFIX/FDO-attribute-definition-type",
+  "fdoProfile": "CORDRA_PREFIX/FDO-type-profile",
+  "description": "This is an attribute definition used in an FDO framework that follows the FDO specification"
+}

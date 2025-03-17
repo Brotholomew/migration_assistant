@@ -133,3 +133,8 @@ def check_connection(service: str):
         return current_app.response_class(status=r.status_code, mimetype='application/json', response={'message': r.text})
     else:
         return current_app.response_class(status=HTTPStatus.INTERNAL_SERVER_ERROR, mimetype='application/json', response={"message": "invalid service"})
+
+
+@bp.route('/metadata', methods=['GET'])
+def get_metadata():
+    return f'<script type="application/ld+json" src="http://127.0.0.1:9090/static/jsonLD.json"></script>'

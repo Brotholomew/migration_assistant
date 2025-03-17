@@ -1,0 +1,22 @@
+{
+  "id": "FDO-type-profile",
+  "fdoType": "CORDRA_PREFIX/FDO-profile-type",
+  "fdoProfile": "CORDRA_PREFIX/FDO-content-profile",
+  "schema": {
+    "allOf": [
+      {
+        "$ref": "FDO-configuration"
+      },
+      {
+        "type": "object",
+        "properties": {
+          "description": "FDO_REF:CORDRA_PREFIX/FDO-description-attribute-definition"
+        },
+        "required": [
+          "description"
+        ]
+      }
+    ],
+    "unevaluatedProperties": false
+  }
+}

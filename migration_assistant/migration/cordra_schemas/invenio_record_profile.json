@@ -1,0 +1,46 @@
+{
+  "id": "invenio-record-profile",
+  "fdoType": "CORDRA_PREFIX/FDO-profile-type",
+  "fdoProfile": "CORDRA_PREFIX/FDO-content-profile",
+  "schema": {
+    "allOf": [
+      {
+        "$ref": "FDO-configuration"
+      },
+      {
+        "type": "object",
+        "properties": {
+          "@context": "FDO_REF:CORDRA_PREFIX/object-attribute-definition",
+          "@type": "FDO_REF:CORDRA_PREFIX/text-attribute-definition",
+          "identifier": "FDO_REF:CORDRA_PREFIX/text-attribute-definition",
+          "name": "FDO_REF:CORDRA_PREFIX/text-attribute-definition",
+          "author": "FDO_REF:CORDRA_PREFIX/contributors-attribute-definition",
+          "editor": "FDO_REF:CORDRA_PREFIX/contributors-attribute-definition",
+          "publisher": "FDO_REF:CORDRA_PREFIX/publisher-attribute-definition",
+          "keywords": "FDO_REF:CORDRA_PREFIX/text-attribute-definition",
+          "datePublished": "FDO_REF:CORDRA_PREFIX/text-attribute-definition",
+          "dateModified": "FDO_REF:CORDRA_PREFIX/text-attribute-definition",
+          "inLanguage": "FDO_REF:CORDRA_PREFIX/language-attribute-definition",
+          "contentSize": "FDO_REF:CORDRA_PREFIX/text-attribute-definition",
+          "version": "FDO_REF:CORDRA_PREFIX/text-attribute-definition",
+          "license": "FDO_REF:CORDRA_PREFIX/text-attribute-definition",
+          "description": "FDO_REF:CORDRA_PREFIX/text-attribute-definition",
+          "citation": "FDO_REF:CORDRA_PREFIX/citation-attribute-definition",
+          "url": "FDO_REF:CORDRA_PREFIX/text-attribute-definition",
+          "distribution": "FDO_REF:CORDRA_PREFIX/distribution-attribute-definition",
+          "conditionsOfAccess": "FDO_REF:CORDRA_PREFIX/text-attribute-definition",
+          "wasDerivedFrom": "FDO_REF:CORDRA_PREFIX/text-attribute-definition"
+        },
+        "required": [
+          "@context",
+          "@type",
+          "identifier",
+          "name",
+          "author",
+          "datePublished"
+        ]
+      }
+    ],
+    "unevaluatedProperties": false
+  }
+}
