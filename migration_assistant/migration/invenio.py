@@ -132,6 +132,13 @@ class Invenio:
         if record_json_ld['@context'] != 'http://schema.org':
             raise Exception(f"Record's {record_id} metadata are in an unsupported format {record_json_ld['@context']}")
 
+        parent_version = ''
+        if 'parent' in record_full_metadata:
+            if 'pids' in record_full_metadata['parent'] and 'doi' in record_full_metadata['parent']['pids'] and 'identifier' in record_full_metadata['parent']['pids']['doi']:
+                parent_version = record_full_metadata['parent']['pids']['doi']['identifier']
+            elif 'id' in record_full_metadata['parent']:
+                parent_version = record_full_metadata['parent']['id']
+
         distribution = [
             {
                 "url": file['links']['content'],
@@ -147,11 +154,12 @@ class Invenio:
             "@context": {
                 "schema": "http://schema.org/",
                 "prov": "http://www.w3.org/ns/prov#",
+                "dcterms": "http://purl.org/dc/terms/",
                 "identifier": "schema:identifier",
                 "name": "schema:name",
                 "author": "schema:author",
                 "editor": "schema:editor",
-                "hasPart": "schema:hasPart",
+                "hasPart": "dcterms:hasPart",
                 "publisher": "schema:publisher",
                 "keywords": "schema:keywords",
                 "datePublished": "schema:datePublished",
@@ -172,7 +180,8 @@ class Invenio:
                 "Language": "schema:Language",
                 "Dataset": "schema:Dataset",
                 "fileFormat": "schema:fileFormat",
-                "fileSize": "schema:fileSize"
+                "fileSize": "schema:fileSize",
+                "isVersionOf": "dcterms:isVersionOf",
               },
             "@type": record_json_ld['@type'] if '@type' in record_json_ld else '',
             "identifier": record_json_ld['identifier'] if 'identifier' in record_json_ld else '',
@@ -193,7 +202,8 @@ class Invenio:
             "url": record_json_ld['url'] if 'url' in record_json_ld else '',
             "distribution": distribution,
             "conditionsOfAccess": record_full_metadata['access']['record'] if 'access' in record_full_metadata and 'record' in record_full_metadata['access'] else '',
-            "wasDerivedFrom": f"{self.url}/records/{record_id}"
+            "wasDerivedFrom": f"{self.url}/records/{record_id}",
+            "isVersionOf": parent_version
         }
 
         return fdo

@@ -30,7 +30,8 @@
           "url": "FDO_REF:CORDRA_PREFIX/text-attribute-definition",
           "distribution": "FDO_REF:CORDRA_PREFIX/distribution-attribute-definition",
           "conditionsOfAccess": "FDO_REF:CORDRA_PREFIX/text-attribute-definition",
-          "wasDerivedFrom": "FDO_REF:CORDRA_PREFIX/text-attribute-definition"
+          "wasDerivedFrom": "FDO_REF:CORDRA_PREFIX/text-attribute-definition",
+          "isVersionOf": "FDO_REF:CORDRA_PREFIX/text-attribute-definition"
         },
         "required": [
           "@context",

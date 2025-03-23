@@ -153,18 +153,18 @@ def get_metadata(id: str):
     if 'application/ld+json' in request.accept_mimetypes.values():
         return fdo
 
-    if 'application/xml' in request.accept_mimetypes.values():
-        if len(fdo['hasPart']) > 0:
-            has_part = ""
-            for part in fdo['hasPart']:
-                if "@id" in part:
-                    has_part += f"<dcterms:hasPart>{part['@id']}</dcterms:hasPart>\n"
-            return current_app.response_class(status=HTTPStatus.OK, mimetype='application/xml', response=f"""
-            <?xml version='1.0' encoding='utf-8'?>
-            <oai_dc:dc xmlns:dcterms="http://purl.org/dc/terms/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
-              {has_part}
-            </oai_dc:dc>
-            """)
+    #if 'application/xml' in request.accept_mimetypes.values():
+    #    if len(fdo['hasPart']) > 0:
+    #        has_part = ""
+    #        for part in fdo['hasPart']:
+    #            if "@id" in part:
+    #                has_part += f"<dcterms:hasPart>{part['@id']}</dcterms:hasPart>\n"
+    #        return current_app.response_class(status=HTTPStatus.OK, mimetype='application/xml', response=f"""
+    #        <?xml version='1.0' encoding='utf-8'?>
+    #        <oai_dc:dc xmlns:dcterms="http://purl.org/dc/terms/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+    #          {has_part}
+    #        </oai_dc:dc>
+    #        """)
 
     return f"""
         <!DOCTYPE html>
