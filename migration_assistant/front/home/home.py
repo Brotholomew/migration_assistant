@@ -108,7 +108,7 @@ def check_connection(service: str):
                     "username": f"{request.json['username']}",
                     "password": f"{request.json['password']}"
                 },
-                verify=False # TODO: remove
+                verify=False
             )
         except Exception as e:
             return current_app.response_class(status=HTTPStatus.INTERNAL_SERVER_ERROR, mimetype='application/json', response={'message': e})
@@ -129,7 +129,7 @@ def check_connection(service: str):
                     'Authorization': f'Bearer {request.json['token']}',
                     'Content-Type': 'application/json'
                 },
-                verify=False # TODO: remove
+                verify=False
             )
         except Exception as e:
             return current_app.response_class(status=HTTPStatus.INTERNAL_SERVER_ERROR, mimetype='application/json', response={'message': e})

@@ -47,18 +47,5 @@ def create_app():
     def migration(ws: Server):
         migrate(ws)
         ws.close()
-        #for i in range(5):
-        #    ws.send({'message': 'this is a test message'})
-        #    sleep(1)
-
-        #ws.close()
-
-    # TODO: delete
-    # with app.app_context():
-    #      repository_setting.get_setting()
-    #
-    # @app.route('/')
-    # def hw():
-    #    return f"<p>log level = {app.config['FLASK_LOG_LEVEL']}, sql url = {app.config['SQLALCHEMY_DATABASE_URI']}</p>"
 
     return app
