@@ -33,3 +33,6 @@ flask --app migration_assistant run --port 9090
 ```
 
 You can change the port, if necessary. After a successful start, your application is available in the browser under `http://localhost:9090`.
+
+# How to cite this material
+Please use this DOI to cite this repository: 10.5281/zenodo.15309021
